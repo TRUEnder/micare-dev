@@ -1,1 +1,0 @@
-https://expo.dev/@truender/micare??serviceType=classic&distribution=expo-go 
