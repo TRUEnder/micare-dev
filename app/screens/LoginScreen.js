@@ -1,8 +1,9 @@
-import { useNavigation } from '@react-navigation/native';
-import { signInWithEmailAndPassword } from 'firebase/auth';
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, LogBox } from 'react-native';
+import AsyncStorage from "@react-native-async-storage/async-storage"
+import { useNavigation } from '@react-navigation/native';
 import { auth } from '../../configFirebase';
+import { signInWithEmailAndPassword } from 'firebase/auth';
 
 function Login() {
     const navigation = useNavigation()
@@ -15,7 +16,7 @@ function Login() {
             .then(userCredentials => {
                 const user = userCredentials.user
                 console.log(user.email)
-                navigation.navigate('Home')
+                navigation.navigate('LandingPage')
             }).catch(error => {
                 alert(error.message)
             })

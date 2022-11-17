@@ -1,11 +1,10 @@
 import React from 'react';
-import { StyleSheet, View, Text, LogBox } from 'react-native';
-import AsyncStorage from "@react-native-async-storage/async-storage"
+import { StyleSheet, View, Text } from 'react-native';
 
-function HomeScreen(props) {
+function SettingScreen(props) {
     return (
         <View style={styles.container}>
-            <Text>Home</Text>
+            <Text>Settings</Text>
         </View>
     );
 }
@@ -18,4 +17,4 @@ const styles = StyleSheet.create({
     }
 })
 
-export default HomeScreen;
+export default SettingScreen;
