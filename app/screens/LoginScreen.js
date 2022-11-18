@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, LogBox, Alert } from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useNavigation } from '@react-navigation/native';
-import { auth } from '../../configFirebase';
+import { auth, onAuthChanged, currentUser } from '../../configFirebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
 import colors from '../config/colors';
@@ -20,14 +20,15 @@ function Login() {
 
     function handleSignIn() {
         signInWithEmailAndPassword(auth, email, password)
-            .then(userCredentials => {
-                const user = userCredentials.user
-                console.log(user.displayName)
+            .then(async (userCredentials) => {
+                await onAuthChanged()
+                console.log(currentUser)
+
                 setEmail(initialState.email)
                 setPassword(initialState.password)
 
                 navigation.navigate('LandingPage')
-            }).catch(error => {
+            }).catch(() => {
                 Alert.alert('Sign In Failed', 'Wrong email or password')
             })
     }

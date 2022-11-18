@@ -1,8 +1,9 @@
 // Import the functions you need from the SDKs you need
 import { getApp, getApps, initializeApp } from "firebase/app"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
-import { getFirestore } from "firebase/firestore"
+import { doc, getDocs, where, getFirestore, collection, query } from "firebase/firestore"
 import AsyncStorage from "@react-native-async-storage/async-storage"
+import { Alert } from "react-native";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -27,16 +28,43 @@ if (getApps().length === 0) {
 }
 
 const auth = getAuth(app)
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        const uid = user.uid
-        const username = user.displayName
-        const email = user.email
-    } else {
-        // User is signed out
-    }
-});
-
 const db = getFirestore(app)
+const currentUser = {
+    authId: null,
+    dbId: null,
+    fullname: null,
+    username: null,
+    email: null,
+}
 
-export { auth, db }
+async function onAuthChanged() {
+    const user = auth.currentUser
+
+    if (user) {
+
+        const q = query(collection(db, "users"), where("email", "==", user.email));
+        const queryResult = await getDocs(q);
+
+        const result = []
+
+        queryResult.forEach((record) => {
+            result.push(record.data())
+        })
+
+        if (result.length !== 0) {
+            currentUser.authId = user.uid
+            currentUser.fullname = result[0].fullname
+            currentUser.username = result[0].username
+            currentUser.email = result[0].email
+        }
+
+    } else {
+        currentUser.authId = null
+        currentUser.dbId = null
+        currentUser.fullname = null
+        currentUser.username = null
+        currentUser.email = null
+    }
+};
+
+export { auth, db, onAuthChanged, currentUser }

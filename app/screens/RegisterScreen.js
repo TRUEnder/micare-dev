@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, TextInput, TouchableOpacity, View, LogBox, Alert } from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useNavigation } from '@react-navigation/native';
-import { auth } from '../../configFirebase';
+import { auth, currentUser, db, onAuthChanged } from '../../configFirebase';
 import { createUserWithEmailAndPassword } from 'firebase/auth'
 import { collection, addDoc } from 'firebase/firestore'
 
@@ -12,28 +12,46 @@ function Register() {
     const navigation = useNavigation()
 
     const initialState = {
+        fullname: '',
         username: '',
         email: '',
         password: ''
     }
 
+    const [fullname, setFullName] = useState(initialState.fullname)
     const [username, setUsername] = useState(initialState.username)
     const [email, setEmail] = useState(initialState.email)
     const [password, setPassword] = useState(initialState.password)
 
     function handleSignUp() {
+
         createUserWithEmailAndPassword(auth, email, password)
-            .then(userCredential => {
-                const user = userCredential.user
-                user.displayName = username
+            .then(async (userCredential) => {
+                try {
+                    const docRef = await addDoc(collection(db, "users"), {
+                        fullname: fullname,
+                        username: username,
+                        email: email,
+                        password: password
+                    });
+                    console.log("Document written with ID: ", docRef.id);
+
+                    await onAuthChanged()
+                    console.log(currentUser.username)
+                } catch (e) {
+                    console.error("Error adding document: ", e);
+                }
 
                 setUsername(initialState.username)
                 setEmail(initialState.email)
                 setPassword(initialState.password)
 
                 navigation.navigate('LandingPage')
-            }).catch(error => {
-                Alert.alert('Sign Up Failed', 'Something is wrong, please try again')
+            }).catch((error) => {
+                const errorMessage = error.message == 'Firebase: Error (auth/email-already-in-use).'
+                    ? 'Email already used' : 'Something is Wrong, try again'
+
+                Alert.alert('Sign Up Failed', errorMessage)
             })
     }
 
@@ -43,6 +61,12 @@ function Register() {
             <View style={styles.form}>
 
                 <View style={styles.inputContainer}>
+
+                    <TextInput
+                        placeholder='Full Name'
+                        value={fullname}
+                        onChangeText={text => setFullName(text)}
+                        style={styles.input} />
 
                     <TextInput
                         placeholder='Username'

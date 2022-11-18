@@ -3,7 +3,7 @@ import { StyleSheet, View, SafeAreaView, Text, Platform, StatusBar, LogBox, useC
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import Ionicons from 'react-native-vector-icons/Ionicons'
 
-import { auth } from '../../configFirebase';
+import { auth, currentUser } from '../../configFirebase';
 import colors from '../config/colors';
 
 function HomeScreen() {
@@ -16,7 +16,7 @@ function HomeScreen() {
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                     <Text style={styles.header1}>Welcome back </Text>
-                    <Text style={styles.header1}>{auth.currentUser.displayName}!</Text>
+                    <Text style={styles.header1}>{currentUser.username}!</Text>
                 </View>
             </SafeAreaView>
 

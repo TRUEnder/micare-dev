@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, SafeAreaView, View, Text, Platform, StatusBar, TouchableWithoutFeedback, Alert } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import { signOut } from 'firebase/auth'
-import { auth } from '../../configFirebase'
+import { auth, currentUser } from '../../configFirebase'
 
 import colors from '../config/colors'
 
@@ -14,8 +14,8 @@ function SettingScreen(props) {
     function handleSignOut() {
         signOut(auth).then(() =>
             navigation.navigate('Login')
-        ).catch(error => {
-            Alert.alert('Error happened', error.message)
+        ).catch(() => {
+            Alert.alert('Something is Wrong', 'Try Again')
         })
     }
 
@@ -27,9 +27,9 @@ function SettingScreen(props) {
             <View style={styles.profile}>
                 <View style={styles.profileLeft}>
                     <Text style={styles.username}>
-                        {auth.currentUser.displayName !== null ? auth.currentUser.displayName : 'Username'}
+                        {currentUser.fullname !== null ? currentUser.fullname : 'Full name'}
                     </Text>
-                    <Text style={styles.email}>{auth.currentUser.email}</Text>
+                    <Text style={styles.email}>{currentUser.email}</Text>
                     <TouchableWithoutFeedback onPress={handleSignOut}>
                         <Text style={styles.logout}>Log Out</Text>
                     </TouchableWithoutFeedback>
