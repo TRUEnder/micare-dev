@@ -1,24 +1,34 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, LogBox } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, LogBox, Alert } from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useNavigation } from '@react-navigation/native';
 import { auth } from '../../configFirebase';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 
+import colors from '../config/colors';
+
 function Login() {
     const navigation = useNavigation()
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = useState('')
+    const initialState = {
+        email: '',
+        password: ''
+    }
+
+    const [email, setEmail] = useState(initialState.email)
+    const [password, setPassword] = useState(initialState.password)
 
     function handleSignIn() {
         signInWithEmailAndPassword(auth, email, password)
             .then(userCredentials => {
                 const user = userCredentials.user
-                console.log(user.email)
+                console.log(user.displayName)
+                setEmail(initialState.email)
+                setPassword(initialState.password)
+
                 navigation.navigate('LandingPage')
             }).catch(error => {
-                alert(error.message)
+                Alert.alert('Sign In Failed', 'Wrong email or password')
             })
     }
 
@@ -68,7 +78,7 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     text: {
-        color: 'black',
+        color: colors.black,
         fontSize: 26,
         fontWeight: '500'
     },
@@ -84,7 +94,7 @@ const styles = StyleSheet.create({
         paddingHorizontal: 20,
         paddingVertical: 10,
         borderWidth: 1,
-        borderColor: 'lightgrey',
+        borderColor: colors.lightgrey,
         borderRadius: 10,
     },
     button: {
@@ -95,18 +105,18 @@ const styles = StyleSheet.create({
         alignItems: 'center'
     },
     primaryButton: {
-        backgroundColor: 'mediumpurple'
+        backgroundColor: colors.purple
     },
     secondaryButton: {
-        backgroundColor: 'white',
+        backgroundColor: colors.white,
         borderWidth: 1,
-        borderColor: 'mediumpurple'
+        borderColor: colors.purple
     },
     primaryButtonText: {
-        color: 'white'
+        color: colors.white
     },
     secondaryButtonText: {
-        color: 'mediumpurple'
+        color: colors.purple
     }
 })
 

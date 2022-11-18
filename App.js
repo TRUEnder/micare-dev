@@ -24,13 +24,13 @@ function LandingPageTabs() {
           let iconName;
 
           if (route.name === 'Home') {
-            iconName = 'home-outline'
+            iconName = focused ? 'home' : 'home-outline'
           } else if (route.name === 'Psikolog') {
-            iconName = 'people-outline';
+            iconName = focused ? 'people' : 'people-outline';
           } else if (route.name === 'Chat') {
-            iconName = 'chatbubbles-outline'
+            iconName = focused ? 'chatbubbles' : 'chatbubbles-outline'
           } else if (route.name === 'Settings') {
-            iconName = 'settings-outline'
+            iconName = focused ? 'settings' : 'settings-outline'
           }
 
           // You can return any component that you like here!
