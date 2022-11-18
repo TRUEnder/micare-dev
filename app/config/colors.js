@@ -3,5 +3,8 @@ export default {
     white: 'white',
     black: 'black',
     lightgrey: 'lightgrey',
-    red: 'red'
+    red: 'red',
+    yellow: 'gold',
+    blue: 'dodgerblue',
+    green: 'green'
 }

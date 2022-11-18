@@ -32,7 +32,10 @@ function Register() {
                         fullname: fullname,
                         username: username,
                         email: email,
-                        password: password
+                        password: password,
+                        // 
+                        status: 'user'
+                        // 
                     });
                     console.log("Document written with ID: ", docRef.id);
 
@@ -95,7 +98,7 @@ function Register() {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('Login')}
+                    onPress={() => navigation.navigate('LoginUser')}
                     style={[styles.button, styles.secondaryButton]}>
                     <Text style={styles.secondaryButtonText}>Log In</Text>
                 </TouchableOpacity>

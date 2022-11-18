@@ -12,8 +12,13 @@ function SettingScreen(props) {
     const navigation = useNavigation()
 
     function handleSignOut() {
-        signOut(auth).then(() =>
-            navigation.navigate('Login')
+        signOut(auth).then(() => {
+            if (currentUser.status == 'user') {
+                navigation.navigate('LoginUser')
+            } else {
+                navigation.navigate('LoginPsikolog')
+            }
+        }
         ).catch(() => {
             Alert.alert('Something is Wrong', 'Try Again')
         })

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StyleSheet, Text, TextInput, TouchableOpacity, View, LogBox, Alert } from 'react-native';
+import { StyleSheet, Text, TextInput, TouchableOpacity, View, LogBox, Alert, TouchableWithoutFeedback } from 'react-native';
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useNavigation } from '@react-navigation/native';
 import { auth, onAuthChanged, currentUser } from '../../configFirebase';
@@ -36,6 +36,10 @@ function Login() {
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Login</Text>
+            <View style={{ flexDirection: 'row' }}>
+                <Text style={[styles.text, { color: colors.yellow }]}>as </Text>
+                <Text style={[styles.text, { color: colors.green }]}>Psychologist</Text>
+            </View>
             <View style={styles.form}>
 
                 <View style={styles.inputContainer}>
@@ -60,11 +64,20 @@ function Login() {
                 </TouchableOpacity>
 
                 <TouchableOpacity
-                    onPress={() => navigation.navigate('Register')}
+                    onPress={() => navigation.navigate('RegisterPsikolog')}
                     style={[styles.button, styles.secondaryButton]}>
                     <Text style={styles.secondaryButtonText}>Register</Text>
                 </TouchableOpacity>
             </View>
+
+            <View style={{ flexDirection: 'row', marginTop: 10 }}>
+                <Text>Login as a user </Text>
+                <TouchableWithoutFeedback
+                    onPress={() => navigation.navigate('LoginUser')}>
+                    <Text style={{ color: colors.blue }}>here</Text>
+                </TouchableWithoutFeedback>
+            </View>
+
         </View>
     );
 }
@@ -81,7 +94,8 @@ const styles = StyleSheet.create({
     text: {
         color: colors.black,
         fontSize: 26,
-        fontWeight: '500'
+        fontWeight: '700',
+        marginBottom: 6
     },
     form: {
         width: '70%',

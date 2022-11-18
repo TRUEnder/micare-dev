@@ -3,7 +3,6 @@ import { getApp, getApps, initializeApp } from "firebase/app"
 import { getAuth, onAuthStateChanged } from "firebase/auth"
 import { doc, getDocs, where, getFirestore, collection, query } from "firebase/firestore"
 import AsyncStorage from "@react-native-async-storage/async-storage"
-import { Alert } from "react-native";
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -31,10 +30,10 @@ const auth = getAuth(app)
 const db = getFirestore(app)
 const currentUser = {
     authId: null,
-    dbId: null,
     fullname: null,
     username: null,
     email: null,
+    status: null
 }
 
 async function onAuthChanged() {
@@ -56,14 +55,15 @@ async function onAuthChanged() {
             currentUser.fullname = result[0].fullname
             currentUser.username = result[0].username
             currentUser.email = result[0].email
+            currentUser.status = result[0].status
         }
 
     } else {
         currentUser.authId = null
-        currentUser.dbId = null
         currentUser.fullname = null
         currentUser.username = null
         currentUser.email = null
+        currentUser.status = null
     }
 };
 
