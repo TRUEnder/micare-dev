@@ -1,7 +1,7 @@
 ## Micare Development Repository
 
 
-<font color="green"><b>Micare</b></font> adalah aplikasi mobile yang menyediakan fitur untuk melakukan konsultasi dengan psikolog secara daring dalam rangka membuat support system yang sehat pada masyarakat.
+<b>Micare</b> adalah aplikasi mobile yang menyediakan fitur untuk melakukan konsultasi dengan psikolog secara daring dalam rangka membuat support system yang sehat pada masyarakat.
 
 Aplikasi mobile sederhana ini dikembangkan dengan menggunakan :
 - <b>React Native</b> sebagai Front-End dan Back-end nya
