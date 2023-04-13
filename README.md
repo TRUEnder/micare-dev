@@ -7,6 +7,8 @@ Aplikasi mobile sederhana ini dikembangkan dengan menggunakan :
 - <b>React Native</b> sebagai Front-End dan Back-end nya
 - <b>Firestore</b> sebagai databasenya
 
+Aplikasi ini juga menggunakan Firebase Auth untuk melakukan autentikasi user
+
 Proposal Proyek :
 https://drive.google.com/file/d/1H-46-rMuCQfJRs5gEvwnO5aK1FJgesQR/view?usp=sharing
 
